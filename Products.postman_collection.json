@@ -1,0 +1,916 @@
+{
+	"info": {
+		"_postman_id": "c1eba42f-eba5-4f7d-a7d3-598618b62835",
+		"name": "Products",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28446788",
+		"_collection_link": "https://warped-equinox-145014.postman.co/workspace/kata-API~8f03536f-2359-47d0-9bb7-78d8f99482d7/collection/28446788-c1eba42f-eba5-4f7d-a7d3-598618b62835?action=share&source=collection_link&creator=28446788"
+	},
+	"item": [
+		{
+			"name": "Get All Products",
+			"item": [
+				{
+					"name": "Respuesta OK productos 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://fakestoreapi.com/products",
+							"protocol": "https",
+							"host": [
+								"fakestoreapi",
+								"com"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Respuesta 400 Bad Request productos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400 a bad request\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"title\": \",\r\n    \"price\": 109.95,\r\n    \"description\": \"Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday\",\r\n    \"category\": \"men's clothing\",\r\n    \"image\": \"https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_t.png\",\r\n    \"rating\": {\r\n        \"rate\": 3.9,\r\n        \"count\": 120\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://fakestoreapi.com/products/",
+							"protocol": "https",
+							"host": [
+								"fakestoreapi",
+								"com"
+							],
+							"path": [
+								"products",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Respuesta 404 Not Found prodcutos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404 resourse not found\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://fakestoreapi.com/product",
+							"protocol": "https",
+							"host": [
+								"fakestoreapi",
+								"com"
+							],
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validar esquema respuesta Json",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"validar esquema de la respuesta\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(jsonData).to.be.an('array'); // Ensure response is an array\r",
+									"    jsonData.forEach(function(products){\r",
+									"        pm.expect(products).to.have.property('id');\r",
+									"        pm.expect(products).to.have.property('title');\r",
+									"        pm.expect(products).to.have.property('price');\r",
+									"        pm.expect(products).to.have.property('description');\r",
+									"        pm.expect(products).to.have.property('category');\r",
+									"        pm.expect(products).to.have.property('image');\r",
+									"        pm.expect(products.rating).to.be.an('object');\r",
+									"        pm.expect(products.rating).to.have.property('rate');\r",
+									"        pm.expect(products.rating).to.have.property('count');\r",
+									"\r",
+									"        //Comprobar los tipos de datos de los campos\r",
+									"        pm.expect(typeof products.id).to.equal('number');\r",
+									"        pm.expect(typeof products.title).to.equal('string');\r",
+									"        pm.expect(typeof products.price).to.equal('number');\r",
+									"        pm.expect(typeof products.description).to.equal('string');\r",
+									"        pm.expect(typeof products.category).to.equal('string');\r",
+									"        pm.expect(typeof products.image).to.equal('string');\r",
+									"        pm.expect(typeof products.rating).to.equal('object');\r",
+									"        pm.expect(typeof products.rating.rate).to.equal('number');\r",
+									"        pm.expect(typeof products.rating.count).to.equal('number');\r",
+									"    });\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://fakestoreapi.com/products/",
+							"protocol": "https",
+							"host": [
+								"fakestoreapi",
+								"com"
+							],
+							"path": [
+								"products",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Add a new product",
+			"item": [
+				{
+					"name": "Validación creación 201 product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201 Created\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"id\": 21,\r\n    \"title\": \"DANY Womens Shirt Casual\",\r\n    \"price\": 10.00,\r\n    \"description\": \"95%Cotton,5%Spandex, Features: Casual, Short Sleeve, Letter Print,V-Neck,Fashion Tees, The fabric is soft and has some stretch., Occasion: Casual/Office/Beach/School/Home/Street. Season: Spring,Summer,Autumn,Winter.\",\r\n    \"category\": \"women's clothing\",\r\n    \"image\": \"https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_j.png\",\r\n    \"rating\": {\r\n        \"rate\": 4.0,\r\n        \"count\": 160\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://fakestoreapi.com/products/",
+							"protocol": "https",
+							"host": [
+								"fakestoreapi",
+								"com"
+							],
+							"path": [
+								"products",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validación creación 400 Bad Request Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400 a bad request\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"id\": 2\r\n    \"title\": \"DANY Womens Shirt Casual\r\n    \"price\": 10.00\r\n    \"description\": \"95%Cotton,5%Spandex, Features: Casual, Short Sleeve, Letter Print,V-Neck,Fashion Tees, The fabric is soft and has some stretch., Occasion: Casual/Office/Beach/School/Home/Street. Season: Spring,Summer,Autumn,Winter.\",\r\n    \"category\": \"women's clothing\"\r\n    \"image\": \"https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_j.png\",\r\n    \"rating\": {\r\n        \"rate\": 4.0,\r\n        \"count\": 160\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://fakestoreapi.com/products/",
+							"protocol": "https",
+							"host": [
+								"fakestoreapi",
+								"com"
+							],
+							"path": [
+								"products",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validación creación 404 Not Found product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404 resourse not found\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "   {\r\n   \"id\": 21,\r\n        \"title\": \"DANY Womens Shirt Casual\",\r\n        \"price\": 10.00,\r\n        \"description\": \"95%Cotton,5%Spandex, Features: Casual, Short Sleeve, Letter Print,V-Neck,Fashion Tees, The fabric is soft and has some stretch., Occasion: Casual/Office/Beach/School/Home/Street. Season: Spring,Summer,Autumn,Winter.\",\r\n        \"category\": \"women's clothing\",\r\n        \"image\": \"https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_j.png\",\r\n        \"rating\": {\r\n            \"rate\": 4.0,\r\n            \"count\": 160\r\n        }\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://fakestoreapi.com/product",
+							"protocol": "https",
+							"host": [
+								"fakestoreapi",
+								"com"
+							],
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validación creación 201 product NULL",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201 Created\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "   {\r\n   \"id\": null,\r\n        \"title\": null,\r\n        \"price\": null,\r\n        \"description\": null,\r\n        \"category\": null,\r\n        \"image\": null,\r\n        \"rating\": {\r\n            \"rate\": null,\r\n            \"count\": null\r\n        }\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://fakestoreapi.com/products/",
+							"protocol": "https",
+							"host": [
+								"fakestoreapi",
+								"com"
+							],
+							"path": [
+								"products",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validación creación 201 Validar Response",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201 Created\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"validar esquema de la respuesta\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(jsonData).to.be.an('object'); // Ensure response is an object\r",
+									"    pm.expect(jsonData).to.have.property('id'); // Ensure it has the 'id' property\r",
+									"    pm.expect(jsonData).to.have.property('title'); // Ensure it has the 'title' property\r",
+									"    pm.expect(jsonData).to.have.property('price'); // Ensure it has the 'price' property\r",
+									"    pm.expect(jsonData).to.have.property('description'); // Ensure it has the 'description' property\r",
+									"    pm.expect(jsonData).to.have.property('image'); // Ensure it has the 'image' property\r",
+									"    pm.expect(jsonData).to.have.property('category'); // Ensure it has the 'category' property\r",
+									"\r",
+									"\r",
+									"    //Comprobar los tipos de datos de los campos\r",
+									"    pm.expect(typeof jsonData.id).to.equal('number');\r",
+									"    pm.expect(typeof jsonData.title).to.equal('string');\r",
+									"    pm.expect(typeof jsonData.price).to.equal('number');\r",
+									"    pm.expect(typeof jsonData.description).to.equal('string');\r",
+									"    pm.expect(typeof jsonData.category).to.equal('string');\r",
+									"    pm.expect(typeof jsonData.image).to.equal('string');\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "   {\r\n   \"id\": 21,\r\n        \"title\": \"DANY Womens Shirt Casual\",\r\n        \"price\": 10.00,\r\n        \"description\": \"95%Cotton,5%Spandex, Features: Casual, Short Sleeve, Letter Print,V-Neck,Fashion Tees, The fabric is soft and has some stretch., Occasion: Casual/Office/Beach/School/Home/Street. Season: Spring,Summer,Autumn,Winter.\",\r\n        \"category\": \"women's clothing\",\r\n        \"image\": \"https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_j.png\",\r\n        \"rating\": {\r\n            \"rate\": 4.0,\r\n            \"count\": 160\r\n        }\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://fakestoreapi.com/products/",
+							"protocol": "https",
+							"host": [
+								"fakestoreapi",
+								"com"
+							],
+							"path": [
+								"products",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Update a product",
+			"item": [
+				{
+					"name": "Actualizar/Update 200 OK",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 20,\r\n    \"title\": \"DANVOUY Womens T Shirt Casual Cotton Short TEST\",\r\n    \"price\": 15.00,\r\n    \"description\": \"95%Cotton,5%Spandex, Features: Casual, Short Sleeve, Letter Print,V-Neck,Fashion Tees, The fabric is soft and has some stretch., Occasion: Casual/Office/Beach/School/Home/Street. Season: Spring,Summer,Autumn,Winter TEST.\",\r\n    \"category\": \"women's clothing TEST\",\r\n    \"image\": \"https://fakestoreapi.com/img/test_t.png\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://fakestoreapi.com/products/20",
+							"protocol": "https",
+							"host": [
+								"fakestoreapi",
+								"com"
+							],
+							"path": [
+								"products",
+								"20"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar/Update 400 Bad Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400 a bad request\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 20,\r\n    \"ttle\": \"DANVOUY Womens T Shirt Casual Cotton Short TEST,\r\n    \"price\": 15.00,\r\n    \"description\": \"95%Cotton,5%Spandex, Features: Casual, Short Sleeve, Letter Print,V-Neck,Fashion Tees, The fabric is soft and has some stretch., Occasion: Casual/Office/Beach/School/Home/Street. Season: Spring,Summer,Autumn,Winter TEST.\",\r\n    \"category\": \"women's clothing TEST\"\r\n    \"image\": \"https://fakestoreapi.com/img/test_t.png\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://fakestoreapi.com/products/20",
+							"protocol": "https",
+							"host": [
+								"fakestoreapi",
+								"com"
+							],
+							"path": [
+								"products",
+								"20"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar/Update 404 Not Found",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404 resourse not found\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 20,\r\n    \"title\": \"DANVOUY Womens T Shirt Casual Cotton Short TEST\",\r\n    \"price\": 15.00,\r\n    \"description\": \"95%Cotton,5%Spandex, Features: Casual, Short Sleeve, Letter Print,V-Neck,Fashion Tees, The fabric is soft and has some stretch., Occasion: Casual/Office/Beach/School/Home/Street. Season: Spring,Summer,Autumn,Winter TEST.\",\r\n    \"category\": \"women's clothing TEST\",\r\n    \"image\": \"https://fakestoreapi.com/img/test_t.png\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://fakestoreapi.com/product/",
+							"protocol": "https",
+							"host": [
+								"fakestoreapi",
+								"com"
+							],
+							"path": [
+								"product",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar/Update 200 Validar Response",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"validar esquema de la respuesta\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(jsonData).to.be.an('object'); // Ensure response is an object\r",
+									"    pm.expect(jsonData).to.have.property('id'); // Ensure it has the 'id' property\r",
+									"    pm.expect(jsonData).to.have.property('title'); // Ensure it has the 'title' property\r",
+									"    pm.expect(jsonData).to.have.property('price'); // Ensure it has the 'price' property\r",
+									"    pm.expect(jsonData).to.have.property('description'); // Ensure it has the 'description' property\r",
+									"    pm.expect(jsonData).to.have.property('image'); // Ensure it has the 'image' property\r",
+									"    pm.expect(jsonData).to.have.property('category'); // Ensure it has the 'category' property\r",
+									"\r",
+									"\r",
+									"    //Comprobar los tipos de datos de los campos\r",
+									"    pm.expect(typeof jsonData.id).to.equal('number');\r",
+									"    pm.expect(typeof jsonData.title).to.equal('string');\r",
+									"    pm.expect(typeof jsonData.price).to.equal('number');\r",
+									"    pm.expect(typeof jsonData.description).to.equal('string');\r",
+									"    pm.expect(typeof jsonData.category).to.equal('string');\r",
+									"    pm.expect(typeof jsonData.image).to.equal('string');\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 20,\r\n    \"title\": \"DANVOUY Womens T Shirt Casual Cotton Short TEST\",\r\n    \"price\": 15.00,\r\n    \"description\": \"95%Cotton,5%Spandex, Features: Casual, Short Sleeve, Letter Print,V-Neck,Fashion Tees, The fabric is soft and has some stretch., Occasion: Casual/Office/Beach/School/Home/Street. Season: Spring,Summer,Autumn,Winter TEST.\",\r\n    \"category\": \"women's clothing TEST\",\r\n    \"image\": \"https://fakestoreapi.com/img/test_t.png\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://fakestoreapi.com/products/20",
+							"protocol": "https",
+							"host": [
+								"fakestoreapi",
+								"com"
+							],
+							"path": [
+								"products",
+								"20"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Delete a product",
+			"item": [
+				{
+					"name": "Eliminar/Delete ok 200 Eliminado",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 20,\r\n    \"title\": \"DANVOUY Womens T Shirt Casual Cotton Short\",\r\n    \"price\": 12.99,\r\n    \"description\": \"95%Cotton,5%Spandex, Features: Casual, Short Sleeve, Letter Print,V-Neck,Fashion Tees, The fabric is soft and has some stretch., Occasion: Casual/Office/Beach/School/Home/Street. Season: Spring,Summer,Autumn Winter.\",\r\n    \"category\": \"women's clothing\",\r\n    \"image\": \"https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_t.png\",\r\n    \"rating\": {\r\n        \"rate\": 3.6,\r\n        \"count\": 145\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://fakestoreapi.com/products/20",
+							"protocol": "https",
+							"host": [
+								"fakestoreapi",
+								"com"
+							],
+							"path": [
+								"products",
+								"20"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar/Delete 400 Bad Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400 a bad request\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 20,\r\n    \"title\": \"DANVOUY Womens T Shirt Casual Cotton Short\r\n    \"price\": 12.99,\r\n    \"description\": \"95%Cotton,5%Spandex, Features: Casual, Short Sleeve, Letter Print,V-Neck,Fashion Tees, The fabric is soft and has some stretch., Occasion: Casual/Office/Beach/School/Home/Street. Season: Spring,Summer,Autumn Winter.\",\r\n    \"category\": \"women's clothing\"\r\n    \"image\": \"https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_t.png\",\r\n    \"rating\": \r\n        rate\": 3.\r\n        \"count\": 14\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://fakestoreapi.com/products/20",
+							"protocol": "https",
+							"host": [
+								"fakestoreapi",
+								"com"
+							],
+							"path": [
+								"products",
+								"20"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar/Delete 400 Bad Request ID Erroneo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400 a bad request\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"validar esquema de la respuesta id erroneo\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(jsonData).to.be.an('object'); // Ensure response is an object\r",
+									"    pm.expect(jsonData).to.have.property('status'); // Ensure it has the 'id' property\r",
+									"    pm.expect(jsonData).to.have.property('message'); // Ensure it has the 'title' property\r",
+									"\r",
+									"    //Comprobar los tipos de datos de los campos\r",
+									"    pm.expect(typeof jsonData.status).to.equal('string');\r",
+									"    pm.expect(typeof jsonData.message).to.equal('string');\r",
+									"    \r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 20,\r\n    \"title\": \"DANVOUY Womens T Shirt Casual Cotton Short\",\r\n    \"price\": 12.99,\r\n    \"description\": \"95%Cotton,5%Spandex, Features: Casual, Short Sleeve, Letter Print,V-Neck,Fashion Tees, The fabric is soft and has some stretch., Occasion: Casual/Office/Beach/School/Home/Street. Season: Spring,Summer,Autumn Winter.\",\r\n    \"category\": \"women's clothing\",\r\n    \"image\": \"https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_t.png\",\r\n    \"rating\": {\r\n        \"rate\": 3.6,\r\n        \"count\": 145\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://fakestoreapi.com/products/fasde2523",
+							"protocol": "https",
+							"host": [
+								"fakestoreapi",
+								"com"
+							],
+							"path": [
+								"products",
+								"fasde2523"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar/Delete 404 Not Found",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404 resourse not found\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 20,\r\n    \"title\": \"DANVOUY Womens T Shirt Casual Cotton Short\",\r\n    \"price\": 12.99,\r\n    \"description\": \"95%Cotton,5%Spandex, Features: Casual, Short Sleeve, Letter Print,V-Neck,Fashion Tees, The fabric is soft and has some stretch., Occasion: Casual/Office/Beach/School/Home/Street. Season: Spring,Summer,Autumn Winter.\",\r\n    \"category\": \"women's clothing\",\r\n    \"image\": \"https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_t.png\",\r\n    \"rating\": {\r\n        \"rate\": 3.6,\r\n        \"count\": 145\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://fakestoreapi.com/product",
+							"protocol": "https",
+							"host": [
+								"fakestoreapi",
+								"com"
+							],
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar/Delete ok 200 Eliminado Validar Response",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"validar esquema de la respuesta\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(jsonData).to.be.an('object'); // Ensure response is an object\r",
+									"    pm.expect(jsonData).to.have.property('id'); // Ensure it has the 'id' property\r",
+									"    pm.expect(jsonData).to.have.property('title'); // Ensure it has the 'title' property\r",
+									"    pm.expect(jsonData).to.have.property('price'); // Ensure it has the 'price' property\r",
+									"    pm.expect(jsonData).to.have.property('description'); // Ensure it has the 'description' property\r",
+									"    pm.expect(jsonData).to.have.property('image'); // Ensure it has the 'image' property\r",
+									"    pm.expect(jsonData).to.have.property('category'); // Ensure it has the 'category' property\r",
+									"\r",
+									"\r",
+									"    //Comprobar los tipos de datos de los campos\r",
+									"    pm.expect(typeof jsonData.id).to.equal('number');\r",
+									"    pm.expect(typeof jsonData.title).to.equal('string');\r",
+									"    pm.expect(typeof jsonData.price).to.equal('number');\r",
+									"    pm.expect(typeof jsonData.description).to.equal('string');\r",
+									"    pm.expect(typeof jsonData.category).to.equal('string');\r",
+									"    pm.expect(typeof jsonData.image).to.equal('string');\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 20,\r\n    \"title\": \"DANVOUY Womens T Shirt Casual Cotton Short\",\r\n    \"price\": 12.99,\r\n    \"description\": \"95%Cotton,5%Spandex, Features: Casual, Short Sleeve, Letter Print,V-Neck,Fashion Tees, The fabric is soft and has some stretch., Occasion: Casual/Office/Beach/School/Home/Street. Season: Spring,Summer,Autumn Winter.\",\r\n    \"category\": \"women's clothing\",\r\n    \"image\": \"https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_t.png\",\r\n    \"rating\": {\r\n        \"rate\": 3.6,\r\n        \"count\": 145\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://fakestoreapi.com/products/20",
+							"protocol": "https",
+							"host": [
+								"fakestoreapi",
+								"com"
+							],
+							"path": [
+								"products",
+								"20"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
